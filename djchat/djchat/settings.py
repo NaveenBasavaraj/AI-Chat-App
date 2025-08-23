@@ -28,6 +28,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = ['8000-naveenbasavar-aichatapp-hx0cvl40lsw.ws-us121.gitpod.io']
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-naveenbasavar-aichatapp-hx0cvl40lsw.ws-us121.gitpod.io',
+]
 
 
 # Application definition
@@ -41,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djchat',
     'rest_framework',
-    'account'
+    'account',
+    'server'
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 class Category(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
@@ -24,7 +24,7 @@ class Channel(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                related_name="channel_owner")
     topic = models.CharField(max_length=200)
-    server = models.ForeignKey(Server, on_delete=models.CASCADE,
+    serverr = models.ForeignKey(Server, on_delete=models.CASCADE,
                                related_name="channel_server")
     
     def save(self, *args, **kwargs):
