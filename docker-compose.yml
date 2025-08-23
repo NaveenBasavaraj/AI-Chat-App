@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./djchat
+      dockerfile: Dockerfile
+    container_name: ai_chat_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./djchat:/app                       # mount source so code changes reflect immediately
+      - static_volume:/app/staticfiles      # static files persisted in named volume
+      - ./djchat/db.sqlite3:/app/db.sqlite3 # persist sqlite file on host (optional)
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=dev-secret-key
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+      - CSRF_TRUSTED_ORIGINS=http://localhost
+    depends_on: []
+
+  frontend:
+    build:
+      context: ./reactchat
+      dockerfile: Dockerfile
+    container_name: ai_chat_frontend
+    volumes:
+      - ./reactchat:/app
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_BACKEND_URL=http://host.docker.internal:8000
+    depends_on:
+      - backend
+
+volumes:
+  static_volume:
